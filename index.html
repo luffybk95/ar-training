@@ -9,7 +9,7 @@
 <body>
   <a-scene embedded arjs="sourceType: webcam; detectionMode: mono; matrixCodeType: 3x3; sourceWidth:960; sourceHeight:640; debugUIEnabled: false;">
     <a-marker type="pattern" url="pattern-marker.patt">
-      <a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="1 1 1">
+      <a-box position="0 0.5 0" rotation="0 45 0" scale="0.05 0.05 0.05" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000" rotation-controls="touchEnabled: true">
         <a-text value="Bước 1: Lắp vít tại vị trí này" position="0 1.5 0" color="red"></a-text>
       </a-entity>
     </a-marker>
@@ -31,4 +31,5 @@
   </script>
 </body>
 </html>
+
 
