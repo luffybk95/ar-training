@@ -17,20 +17,14 @@
   </a-scene>
 
   <script>
-    // Tích hợp xAPI để gửi tiến độ (giả sử thư viện xAPIWrapper đã include)
-    document.addEventListener('markerFound', function() {
-      // Gửi event khi phát hiện marker
-      ADL.XAPIWrapper.sendStatement({
-        "actor": {"mbox": "mailto:congnhan@example.com"},
-        "verb": {"id": "http://adlnet.gov/expapi/verbs/completed"},
-        "object": {"id": "http://example.com/steps/step1"}
-      });
-      console.log('Bước 1 hoàn thành - Gửi về LMS');
-    });
+  document.addEventListener('markerLost', function() {
+    console.log('Marker lost!');
+  });
   </script>
 </body>
 
 </html>
+
 
 
 
