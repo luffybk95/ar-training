@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AR Work Instruction Prototype</title>
+ <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+<body>
+  <a-scene embedded arjs="sourceType: webcam; detectionMode: mono; matrixCodeType: 3x3; sourceWidth:1280; sourceHeight:720;">
+    <!-- Marker QR Code (thay 'preset' bằng custom marker nếu dùng QR thực tế) -->
+    <a-marker preset="hiro">  <!-- Hoặc type="barcode" value="0" cho QR code đơn giản -->
+      <!-- Overlay AR: Hiển thị hộp 3D với hướng dẫn -->
+      <a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="1 1 1">
+        <a-text value="Bước 1: Lắp vít tại vị trí này" position="0 1.5 0" color="red"></a-text>
+      </a-box>
+    </a-marker>
+    <a-entity camera></a-entity>  <!-- Camera từ thiết bị -->
+  </a-scene>
+
+  <script>
+    // Tích hợp xAPI để gửi tiến độ (giả sử thư viện xAPIWrapper đã include)
+    document.addEventListener('markerFound', function() {
+      // Gửi event khi phát hiện marker
+      ADL.XAPIWrapper.sendStatement({
+        "actor": {"mbox": "mailto:congnhan@example.com"},
+        "verb": {"id": "http://adlnet.gov/expapi/verbs/completed"},
+        "object": {"id": "http://example.com/steps/step1"}
+      });
+      console.log('Bước 1 hoàn thành - Gửi về LMS');
+    });
+  </script>
+</body>
+</html>
