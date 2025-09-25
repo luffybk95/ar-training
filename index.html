@@ -4,13 +4,14 @@
   <title>AR Work Instruction Prototype</title>
   <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <!-- Gi? aframe-extras n?u animation t? xoay c?n, nhung lo?i rotation-controls d? tránh xung d?t -->
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
 </head>
 <body>
   <a-scene embedded arjs="sourceType: webcam; detectionMode: mono; matrixCodeType: 3x3; sourceWidth:960; sourceHeight:640; debugUIEnabled: false;">
     <a-marker type="pattern" url="pattern-marker.patt">
-      <a-box position="0 0.5 0" rotation="0 45 0" scale="1 1 1" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000" rotation-controls="touchEnabled: true">
-        <a-text value="Bước 1: Lắp vít tại vị trí này" position="0 1.5 0" color="red"></a-text>
+      <a-entity id="model" gltf-model="url(car-part.glb)" position="0 0.5 0" rotation="0 45 0" scale="0.05 0.05 0.05" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        <a-text value="Bu?c 1: L?p vít t?i v? trí này" position="0 1.5 0" color="red"></a-text>
       </a-entity>
     </a-marker>
     <a-entity camera></a-entity>
@@ -23,15 +24,38 @@
         "verb": {"id": "http://adlnet.gov/expapi/verbs/completed"},
         "object": {"id": "http://example.com/steps/step1"}
       });
-      console.log('Bước 1 hoàn thành - Gửi về LMS');
+      console.log('Bu?c 1 hoàn thành - G?i v? LMS');
     });
     document.addEventListener('markerLost', function() {
       console.log('Marker lost!');
     });
+
+    // Script tùy ch?nh cho xoay tuong tác b?ng ch?m
+    AFRAME.registerComponent('touch-rotate', {
+      schema: {
+        speed: {default: 0.5}  // Ð? nh?y xoay
+      },
+      init: function () {
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.el.sceneEl.addEventListener('touchstart', this.onTouchStart.bind(this));
+        this.el.sceneEl.addEventListener('touchmove', this.onTouchMove.bind(this));
+      },
+      onTouchStart: function (evt) {
+        this.touchStartX = evt.touches[0].clientX;
+        this.touchStartY = evt.touches[0].clientY;
+      },
+      onTouchMove: function (evt) {
+        var deltaX = evt.touches[0].clientX - this.touchStartX;
+        var deltaY = evt.touches[0].clientY - this.touchStartY;
+        var rotation = this.el.getAttribute('rotation');
+        rotation.y += deltaX * this.data.speed;  // Xoay ngang
+        rotation.x += deltaY * this.data.speed;  // Xoay d?c
+        this.el.setAttribute('rotation', rotation);
+        this.touchStartX = evt.touches[0].clientX;
+        this.touchStartY = evt.touches[0].clientY;
+      }
+    });
   </script>
 </body>
 </html>
-
-
-
-
