@@ -10,9 +10,9 @@
 <body>
   <a-scene embedded arjs="sourceType: webcam; detectionMode: mono; matrixCodeType: 3x3; sourceWidth:960; sourceHeight:640; debugUIEnabled: false;">
     <a-marker type="pattern" url="pattern-marker.patt">
-      <a-entity id="model" gltf-model="https://cdn.aframe.io/test-models/models/glTF/Duck.glb" position="0 0.5 0" rotation="0 45 0" scale="0.05 0.05 0.05" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-        <a-text value="Bu?c 1: L?p vít t?i v? trí này" position="0 1.5 0" color="red"></a-text>
-      </a-entity>
+      <a-box position="0 0.5 0" rotation="0 45 0" color="#4CC3D9" scale="1 1 1" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+        <a-text value="Step 1____" position="0 1.5 0" color="red"></a-text>
+      </a-box>
     </a-marker>
     <a-entity camera></a-entity>
   </a-scene>
@@ -59,4 +59,5 @@
   </script>
 </body>
 </html>
+
 
